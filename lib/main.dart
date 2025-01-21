@@ -7,6 +7,12 @@ void main(){
 class PerguntaApp extends StatelessWidget {
   const PerguntaApp({super.key});
 
+  final int perguntaSelecionada = 0;
+
+  void responder (){
+    print('Pergunta respondida');
+  }
+
   @override
   Widget build(BuildContext context){
     final List<String> perguntas = [
@@ -20,24 +26,28 @@ class PerguntaApp extends StatelessWidget {
           centerTitle: true,
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
           title: Text('Quiz',),
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Colors.teal,
         ),
-        body: Column(
-          children: [
-            Text(perguntas[0], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ElevatedButton(
-              onPressed: null, 
-              child: Text('Resposta 1'),
-            ),
-            ElevatedButton(
-              onPressed: null, 
-              child: Text('Resposta 2'),
-            ),
-            ElevatedButton(
-              onPressed: null, 
-              child: Text('Resposta 3'),
-            ),
-          ],
+        body: Container(
+          margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(perguntas[perguntaSelecionada], style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              ElevatedButton(
+                onPressed: responder, 
+                child: Text('Resposta 1'),
+              ),
+              ElevatedButton(
+                onPressed: responder, 
+                child: Text('Resposta 2'),
+              ),
+              ElevatedButton(
+                onPressed: responder, 
+                child: Text('Resposta 3'),
+              ),
+            ],
+          ),
         )
       ),
     );
