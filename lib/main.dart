@@ -4,14 +4,16 @@ void main(){
   runApp(PerguntaApp());
 }
 
-class PerguntaApp extends StatelessWidget {
-  const PerguntaApp({super.key});
-
-  final int perguntaSelecionada = 0;
-
-  void responder (){
-    print('Pergunta respondida');
-  }
+class PerguntaAppState extends State<PerguntaApp> {
+    int perguntaSelecionada = 0;
+    
+    void responder (){
+      print('Pergunta respondida');
+      
+      setState(() {
+        perguntaSelecionada++;
+      });
+    }
 
   @override
   Widget build(BuildContext context){
@@ -52,4 +54,14 @@ class PerguntaApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class PerguntaApp extends StatefulWidget {
+  const PerguntaApp({super.key});
+  
+  @override
+  PerguntaAppState createState(){
+    return PerguntaAppState();
+  }
+
 }
