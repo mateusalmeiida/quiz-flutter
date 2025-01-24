@@ -33,7 +33,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
     ];
 
     List<String> respostas = questionario[_perguntaSelecionada].cast()['respostas'];
-    List<Widget> componentes = respostas.map((t) => Resposta(t, _responder)).toList();
+    List<Widget> componentes = respostas.map((t){
+      return Resposta(t, _responder);
+    }).toList();
 
     return MaterialApp(
       home: Scaffold(
