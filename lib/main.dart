@@ -2,38 +2,52 @@ import 'package:flutter/material.dart';
 import './questao.dart';
 import './resposta.dart';
 
-void main(){
+void main() {
   runApp(PerguntaApp());
 }
 
 class _PerguntaAppState extends State<PerguntaApp> {
-    int _perguntaSelecionada = 0;
-    
-    void _responder (){
+  int _perguntaSelecionada = 0;
+
+  final List<Map<String, Object>> _questionario = const [
+    {
+      'pergunta': 'Qual a sua cor favorita?',
+      'respostas': ['Azul', 'Verde', 'Vermelho', 'Amarelo'],
+    },
+    {
+      'pergunta': 'Qual o seu animal favorito?',
+      'respostas': ['Cachorro', 'Gato', 'Coelho', 'Vaca']
+    },
+    {
+      'pergunta': 'Qual o seu filme favorito?',
+      'respostas': [
+        'Interestelar',
+        'Vingadores',
+        'Guerra nas estrelas',
+        'Superman'
+      ],
+    }
+  ];
+
+  void _responder() {
+    if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
       });
     }
+  }
+
+  bool get temPerguntaSelecionada {
+    return _perguntaSelecionada < _questionario.length;
+  }
 
   @override
-  Widget build(BuildContext context){
-    final List<Map<String,Object>> questionario = [
-      {
-        'pergunta': 'Qual a sua cor favorita?',
-        'respostas': ['Azul','Verde','Vermelho','Amarelo'],
-      },
-      {
-        'pergunta': 'Qual o seu animal favorito?',
-        'respostas': ['Cachorro','Gato','Coelho','Vaca']
-      },
-      {
-        'pergunta': 'Qual o seu filme favorito?',
-        'respostas': ['Interestelar','Vingadores','Guerra nas estrelas','Superman'],
-      }
-    ];
+  Widget build(BuildContext context) {
+    List<String> respostas = temPerguntaSelecionada
+        ? _questionario[_perguntaSelecionada].cast()['respostas']
+        : [];
 
-    List<String> respostas = questionario[_perguntaSelecionada].cast()['respostas'];
-    List<Widget> componentes = respostas.map((t){
+    List<Widget> componentes = respostas.map((t) {
       return Resposta(t, _responder);
     }).toList();
 
@@ -41,19 +55,32 @@ class _PerguntaAppState extends State<PerguntaApp> {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          titleTextStyle: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-          title: Text('Quiz',),
+          titleTextStyle: TextStyle(
+              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+          title: Text(
+            'Quiz',
+          ),
           backgroundColor: Colors.teal[300],
         ),
-        body: Container(
-          margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: Column(
-            children: [
-              Questao(questionario[_perguntaSelecionada]['pergunta'].toString()),
-              ...componentes,
-            ],
-          ),
-        )
+        body: temPerguntaSelecionada
+            ? Container(
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: Column(
+                  children: [
+                    Questao(_questionario[_perguntaSelecionada]['pergunta']
+                        .toString()),
+                    ...componentes,
+                  ],
+                ),
+              )
+            : Center(
+                child: Text(
+                'Parabéns!',
+                style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.teal,
+                    fontWeight: FontWeight.bold),
+              )),
       ),
     );
   }
@@ -61,10 +88,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
 class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
-  
+
   @override
-  _PerguntaAppState createState(){
+  _PerguntaAppState createState() {
     return _PerguntaAppState();
   }
-
 }
