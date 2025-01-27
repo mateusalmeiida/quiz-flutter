@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './questao.dart';
 import './resposta.dart';
+import './resultado.dart';
 
 void main() {
   runApp(PerguntaApp());
@@ -53,35 +54,27 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          titleTextStyle: TextStyle(
-              color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-          title: Text(
-            'Quiz',
+          appBar: AppBar(
+            centerTitle: true,
+            titleTextStyle: TextStyle(
+                color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+            title: Text(
+              'Quiz',
+            ),
+            backgroundColor: Colors.teal[300],
           ),
-          backgroundColor: Colors.teal[300],
-        ),
-        body: temPerguntaSelecionada
-            ? Container(
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Column(
-                  children: [
-                    Questao(_questionario[_perguntaSelecionada]['pergunta']
-                        .toString()),
-                    ...componentes,
-                  ],
-                ),
-              )
-            : Center(
-                child: Text(
-                'Parabéns!',
-                style: TextStyle(
-                    fontSize: 25,
-                    color: Colors.teal,
-                    fontWeight: FontWeight.bold),
-              )),
-      ),
+          body: temPerguntaSelecionada
+              ? Container(
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Column(
+                    children: [
+                      Questao(_questionario[_perguntaSelecionada]['pergunta']
+                          .toString()),
+                      ...componentes,
+                    ],
+                  ),
+                )
+              : Resultado()),
     );
   }
 }
